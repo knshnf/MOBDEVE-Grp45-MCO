@@ -16,7 +16,6 @@
         android:layout_marginTop="144dp"
         android:contentDescription="Profile Image"
         android:scaleType="centerCrop"
-        android:src=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
