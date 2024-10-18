@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/SEARCH"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Search">
+
+    <TextView
+        android:id="@+id/activity_search_tv_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weather"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/activity_main_gl_left"
+        app:layout_constraintTop_toTopOf="@+id/activity_main_gl_top" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_main_gl_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_main_gl_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="378dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="?android:attr/actionModeWebSearchDrawable"
+        android:ems="10"
+        android:hint="Search for a city"
+        android:inputType="text"
+        android:singleLine="false"
+        android:text="Name"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/activity_main_gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/activity_search_tv_search" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="395dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="378dp"
+        android:layout_height="612dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/activity_main_gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+</androidx.constraintlayout.widget.ConstraintLayout>
