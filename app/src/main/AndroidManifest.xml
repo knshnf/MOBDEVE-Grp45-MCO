@@ -16,6 +16,12 @@
             android:name=".Search"
             android:exported="false" />
         <activity
+            android:name=".profile_page"
+            android:exported="false" />
+        <activity
+            android:name=".login_page"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -25,4 +31,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
