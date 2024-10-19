@@ -1,12 +1,12 @@
 package com.mobdeve_group45_mco
 
-class Forecast(day: String, iconId: Int, tempRange: String) {
-    var day= day
+class HourlyWeather(hour: String, iconId: Int, temp: String) {
+    var hour= hour
         private set
 
     var iconId = iconId
         private set
 
-    var tempRange = tempRange
+    var temp = temp
         private set
 }
