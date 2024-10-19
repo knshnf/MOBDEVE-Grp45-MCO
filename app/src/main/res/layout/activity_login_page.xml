@@ -5,17 +5,17 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/anime_style_clouds"
     tools:context=".login_page">
 
     <TextView
         android:id="@+id/activity_login_tv_Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/roboto_medium_italic"
         android:text="@string/breezi"
         android:textColor="#090909"
-        android:textSize="34sp"
-        android:textStyle="bold"
+        android:textSize="44sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +29,9 @@
         android:layout_marginBottom="52dp"
         android:autofillHints="Email"
         android:ems="10"
+        android:background="@drawable/text_bg"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="@color/black"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/activity_login_et_password"
@@ -42,8 +45,10 @@
         android:layout_width="216dp"
         android:layout_height="48dp"
         android:layout_marginBottom="276dp"
+        android:background="@drawable/text_bg"
         android:autofillHints="Password"
         android:ems="10"
+        android:fontFamily="@font/roboto_medium"
         android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,29 +58,26 @@
 
     <Button
         android:id="@+id/activity_login_btn_signIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="216dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="84dp"
-        android:layout_marginBottom="160dp"
-        android:background="#4FCDDC"
+        android:layout_marginBottom="184dp"
+        android:background="@drawable/button_shape_green"
         android:text="@string/sign_in"
         android:tint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/acitivity_login_btn_signUp" />
-
-    <Button
-        android:id="@+id/acitivity_login_btn_signUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="160dp"
-        android:background="#4FCDDC"
-        android:text="@string/sign_up"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/activity_login_btn_signIn"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.836"
         app:layout_constraintStart_toStartOf="parent" />
+
+<!--    <Button-->
+<!--        android:id="@+id/acitivity_login_btn_signUp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="68dp"-->
+<!--        android:background="@drawable/button_shape"-->
+<!--        android:text="@string/sign_up"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
