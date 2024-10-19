@@ -1,4 +1,4 @@
-package com.mobdeve_group45_mco.HourlyWeather
+package com.mobdeve_group45_mco.hourlyWeather
 
 class HourlyWeather(hour: String, iconId: Int, temp: String) {
     var hour= hour

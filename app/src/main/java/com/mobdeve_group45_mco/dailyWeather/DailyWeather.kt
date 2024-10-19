@@ -1,4 +1,4 @@
-package com.mobdeve_group45_mco
+package com.mobdeve_group45_mco.dailyWeather
 
 class DailyWeather(day: String, iconId: Int, tempRange: String) {
     var day= day

@@ -1,6 +1,7 @@
 package com.mobdeve_group45_mco
 
-import com.mobdeve_group45_mco.HourlyWeather.HourlyWeather
+import com.mobdeve_group45_mco.dailyWeather.DailyWeather
+import com.mobdeve_group45_mco.hourlyWeather.HourlyWeather
 
 class DataGenerator {
     companion object {

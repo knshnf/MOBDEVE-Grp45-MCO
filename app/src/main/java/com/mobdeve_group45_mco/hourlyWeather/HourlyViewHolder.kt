@@ -1,4 +1,4 @@
-package com.mobdeve_group45_mco.HourlyWeather
+package com.mobdeve_group45_mco.hourlyWeather
 
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve_group45_mco.databinding.HourlyWeatherLayoutBinding
