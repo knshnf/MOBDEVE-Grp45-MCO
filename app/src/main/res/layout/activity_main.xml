@@ -33,7 +33,7 @@
         android:id="@+id/activity_main_tv_conditions"
         android:layout_width="366dp"
         android:layout_height="23dp"
-        android:text="@string/sunny_conditions_will_continue_all_day"
+        android:text="@string/day_weather_description"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/activity_main_tv_temperature" />
