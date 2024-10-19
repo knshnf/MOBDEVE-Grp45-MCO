@@ -3,7 +3,7 @@ package com.mobdeve_group45_mco.hourlyWeather
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve_group45_mco.databinding.HourlyWeatherLayoutBinding
 
-class HourlyViewHolder(private val viewBinding: HourlyWeatherLayoutBinding) : RecyclerView.ViewHolder(viewBinding.root) {
+class HourlyViewHolder(private val viewBinding: HourlyWeatherLayoutBinding) : RecyclerView.ViewHolder(viewBinding.root){
     fun bindData(hourlyWeather: HourlyWeather){
         this.viewBinding.hourlyWeatherTvHour.text = hourlyWeather.hour
         this.viewBinding.hourlyWeatherIvIcon.setImageResource(hourlyWeather.iconId)

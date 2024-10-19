@@ -15,11 +15,6 @@ class DataGenerator {
         private val hour8 : HourlyWeather = HourlyWeather("4PM", R.drawable.sun, "31°")
         private val hour9 : HourlyWeather = HourlyWeather("5PM", R.drawable.sun, "31°")
         private val hour10 : HourlyWeather = HourlyWeather("6PM", R.drawable.sun, "30°")
-
-        fun hourlyWeatherData(): ArrayList<HourlyWeather> {
-            return arrayListOf<HourlyWeather>(hour1, hour2, hour3, hour4, hour5, hour6, hour7, hour8, hour9, hour10)
-        }
-
         private val day1 : DailyWeather = DailyWeather("Today", R.drawable.sun, "27° - 31°")
         private val day2 : DailyWeather = DailyWeather("Sun", R.drawable.storm, "27° - 31°")
         private val day3 : DailyWeather = DailyWeather("Mon", R.drawable.cloudy, "27° - 32°")
@@ -28,6 +23,10 @@ class DataGenerator {
         private val day6 : DailyWeather = DailyWeather("Thu", R.drawable.storm, "26° - 29°")
         private val day7 : DailyWeather = DailyWeather("Fri", R.drawable.raining, "27° - 29°")
         private val day8 : DailyWeather = DailyWeather("Sat", R.drawable.cloudy, "27° - 30°")
+
+        fun hourlyWeatherData(): ArrayList<HourlyWeather> {
+            return arrayListOf<HourlyWeather>(hour1, hour2, hour3, hour4, hour5, hour6, hour7, hour8, hour9, hour10)
+        }
 
         fun dailyWeatherData(): ArrayList<DailyWeather> {
             return arrayListOf<DailyWeather>(day1, day2, day3, day4, day5, day6, day7, day8)

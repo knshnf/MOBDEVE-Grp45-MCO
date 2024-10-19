@@ -19,6 +19,6 @@ class HourlyAdapter(private val hourlyWeather: ArrayList<HourlyWeather>): Recycl
     }
 
     override fun onBindViewHolder(holder: HourlyViewHolder, position: Int) {
-        holder.bindData(hourlyWeather.get(position))
+        holder.bindData(hourlyWeather[position])
     }
 }
