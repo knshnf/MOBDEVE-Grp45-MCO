@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_forecast_iv_sun"
+    android:id="@+id/daily_weather_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/item_forecast_tv_day"
+        android:id="@+id/daily_weather_tv_day"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:text="Day" />
+        android:text="@string/day" />
 
     <ImageView
-        android:id="@+id/item_forecast_iv_icon"
+        android:id="@+id/daily_weather_tv_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:contentDescription="@string/weather_icon"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <TextView
-        android:id="@+id/item_forecast_tv_temperature"
+        android:id="@+id/daily_weather_tv_tempRange"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center_vertical|end"
-        android:text="56" />
+        android:text="@string/_56" />
 </LinearLayout>
