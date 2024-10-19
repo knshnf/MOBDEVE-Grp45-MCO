@@ -13,4 +13,6 @@
     <string name="manila">Manila</string>
     <string name="day_weather_description">Sunny conditions will continue most of the day</string>
     <string name="icon">hourly weather icon</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,10 +1,13 @@
 package com.mobdeve_group45_mco
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.navigation.NavigationBarView
 
 class login_page : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +18,13 @@ class login_page : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        var signInBtn = findViewById<Button>(R.id.activity_login_btn_signIn)
+        signInBtn.setOnClickListener {
+            val navIntent = Intent(this, MainActivity::class.java)
+            navIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(navIntent)
         }
     }
 }
