@@ -1,5 +1,7 @@
 package com.mobdeve_group45_mco
 
+import com.mobdeve_group45_mco.HourlyWeather.HourlyWeather
+
 class DataGenerator {
     companion object {
         private val hour1 : HourlyWeather = HourlyWeather("NOW", R.drawable.sun, "27°")

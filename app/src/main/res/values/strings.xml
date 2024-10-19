@@ -10,4 +10,9 @@
     <string name="_56">56</string>
     <string name="_76">76°</string>
     <string name="time">Time</string>
+    <string name="_10_day_forecast">10-day forecast</string>
+    <string name="sunny_conditions_will_continue_all_day">Sunny conditions will continue all day.</string>
+    <string name="__76">76°</string>
+    <string name="_30">30</string>
+    <string name="manila">Manila</string>
 </resources>
