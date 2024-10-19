@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MOBDEVE_GROUP45_MCO</string>
+    <string name="breezi">Breezi</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
