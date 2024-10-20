@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobdeve_group45_mco.dailyWeather.DailyAdapter
 import com.mobdeve_group45_mco.databinding.FragmentHomeBinding
@@ -50,6 +51,13 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewBinding.fragmentSearchRvResults.adapter = SearchAdapter(DataGenerator.searchResultsData())
         viewBinding.fragmentSearchRvResults.layoutManager = LinearLayoutManager(requireContext())
+        val dividerItemDecoration = DividerItemDecoration(
+            viewBinding.fragmentSearchRvResults.context,
+            1
+        )
+        viewBinding.fragmentSearchRvResults.addItemDecoration(dividerItemDecoration)
+        viewBinding.fragmentSearchRvResults.layoutManager = LinearLayoutManager(requireContext())
+
     }
 
     companion object {
