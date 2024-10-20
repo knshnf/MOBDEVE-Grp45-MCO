@@ -2,6 +2,7 @@ package com.mobdeve_group45_mco
 
 import com.mobdeve_group45_mco.dailyWeather.DailyWeather
 import com.mobdeve_group45_mco.hourlyWeather.HourlyWeather
+import com.mobdeve_group45_mco.searchResults.Search
 
 class DataGenerator {
     companion object {
@@ -23,13 +24,21 @@ class DataGenerator {
         private val day6 : DailyWeather = DailyWeather("Thu", R.drawable.storm, "26° - 29°")
         private val day7 : DailyWeather = DailyWeather("Fri", R.drawable.raining, "27° - 29°")
         private val day8 : DailyWeather = DailyWeather("Sat", R.drawable.cloudy, "27° - 30°")
-
+        private val search1 : Search = Search("New York", "10:00 AM", "22°", "Sunny", "H: 25° L: 15°")
+        private val search2 : Search = Search("Los Angeles", "11:00 AM", "24°", "Cloudy", "H: 27° L: 18°")
+        private val search3 : Search = Search("Chicago", "12:00 PM", "20°", "Rain", "H: 23° L: 14°")
+        private val search4 : Search = Search("Houston", "01:00 PM", "26°", "Stormy", "H: 29° L: 21°")
+        private val search5 : Search = Search("Phoenix", "02:00 PM", "33°", "Sunny", "H: 35° L: 25°")
         fun hourlyWeatherData(): ArrayList<HourlyWeather> {
             return arrayListOf<HourlyWeather>(hour1, hour2, hour3, hour4, hour5, hour6, hour7, hour8, hour9, hour10)
         }
 
         fun dailyWeatherData(): ArrayList<DailyWeather> {
             return arrayListOf<DailyWeather>(day1, day2, day3, day4, day5, day6, day7, day8)
+        }
+
+        fun searchResultsData(): ArrayList<Search> {
+            return arrayListOf(search1, search2, search3, search4, search5)
         }
     }
 }
