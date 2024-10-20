@@ -46,10 +46,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewBinding.activityMainRvHours.adapter = HourlyAdapter(DataGenerator.hourlyWeatherData())
-        viewBinding.activityMainRvHours.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        viewBinding.activityMainRvDays.adapter = DailyAdapter(DataGenerator.dailyWeatherData())
-        viewBinding.activityMainRvDays.layoutManager = LinearLayoutManager(requireContext())
+        viewBinding.fragmentHomeRvHours.adapter = HourlyAdapter(DataGenerator.hourlyWeatherData())
+        viewBinding.fragmentHomeRvHours.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        viewBinding.fragmentHomeRvDays.adapter = DailyAdapter(DataGenerator.dailyWeatherData())
+        viewBinding.fragmentHomeRvDays.layoutManager = LinearLayoutManager(requireContext())
     }
 
     companion object {

@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val logoutBtn = view.findViewById<Button>(R.id.activity_profile_btn_Logout)
+        val logoutBtn = view.findViewById<Button>(R.id.fragment_profile_btn_Logout)
         logoutBtn.setOnClickListener {
             // Navigate to the login page and finish the current MainActivity
             val navIntent = Intent(requireContext(), LoginActivity::class.java)

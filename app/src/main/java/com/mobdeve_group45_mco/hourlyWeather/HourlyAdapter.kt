@@ -3,12 +3,12 @@ package com.mobdeve_group45_mco.hourlyWeather
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve_group45_mco.databinding.HourlyWeatherLayoutBinding
+import com.mobdeve_group45_mco.databinding.ItemHourlyWeatherLayoutBinding
 
 class HourlyAdapter(private val hourlyWeather: ArrayList<HourlyWeather>): RecyclerView.Adapter<HourlyViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HourlyViewHolder {
 
-        val itemViewBinding: HourlyWeatherLayoutBinding = HourlyWeatherLayoutBinding.inflate(
+        val itemViewBinding: ItemHourlyWeatherLayoutBinding = ItemHourlyWeatherLayoutBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
 
         return HourlyViewHolder(itemViewBinding)

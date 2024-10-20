@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         val searchFragment=SearchFragment()
 
         setCurrentFragment(homeFragment)
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.activity_main_bnv_navigation)
         bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.miHome->setCurrentFragment(homeFragment)
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setCurrentFragment(fragment: Fragment)=
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragment,fragment)
+            replace(R.id.activity_main_fl_fragment,fragment)
             commit()
         }
 }

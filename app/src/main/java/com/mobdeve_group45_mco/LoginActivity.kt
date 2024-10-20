@@ -19,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
-        var signInBtn = findViewById<Button>(R.id.activity_login_btn_signIn)
+        var signInBtn = findViewById<Button>(R.id.fragment_login_btn_signIn)
         signInBtn.setOnClickListener {
             val navIntent = Intent(this, MainActivity::class.java)
             startActivity(navIntent)
