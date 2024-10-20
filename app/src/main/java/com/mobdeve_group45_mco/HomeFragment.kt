@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobdeve_group45_mco.dailyWeather.DailyAdapter
 import com.mobdeve_group45_mco.databinding.FragmentHomeBinding
 import com.mobdeve_group45_mco.databinding.FragmentLoginBinding
 import com.mobdeve_group45_mco.hourlyWeather.HourlyAdapter
+import com.mobdeve_group45_mco.post.PostAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,6 +52,14 @@ class HomeFragment : Fragment() {
         viewBinding.fragmentHomeRvHours.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         viewBinding.fragmentHomeRvDays.adapter = DailyAdapter(DataGenerator.dailyWeatherData())
         viewBinding.fragmentHomeRvDays.layoutManager = LinearLayoutManager(requireContext())
+        viewBinding.fragmentHomeRvPosts.adapter = PostAdapter(DataGenerator.loadPostData())
+        viewBinding.fragmentHomeRvPosts.layoutManager = LinearLayoutManager(requireContext())
+        val dividerItemDecoration = DividerItemDecoration(
+            viewBinding.fragmentHomeRvPosts.context,
+            1
+        )
+        viewBinding.fragmentHomeRvPosts.addItemDecoration(dividerItemDecoration)
+        viewBinding.fragmentHomeRvPosts.layoutManager = LinearLayoutManager(requireContext())
     }
 
     companion object {
