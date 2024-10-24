@@ -25,7 +25,7 @@
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/roboto_medium_italic"
                 android:text="@string/manila"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
