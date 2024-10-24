@@ -4,99 +4,115 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/anime_style_clouds"
     tools:context=".HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/HOME_PAGE"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/fragment_home_tv_city"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/HOME_PAGE"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/manila"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:context=".MainActivity">
 
-        <TextView
-            android:id="@+id/fragment_home_tv_temperature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="132dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/_30"
-            android:textSize="96sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_home_tv_city" />
+            <TextView
+                android:id="@+id/fragment_home_tv_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/roboto_medium_italic"
+                android:text="@string/manila"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/fragment_home_tv_conditions"
-            android:layout_width="366dp"
-            android:layout_height="23dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/day_weather_description"
-            app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_home_tv_temperature" />
+            <TextView
+                android:id="@+id/fragment_home_tv_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="132dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/roboto_bold_italic"
+                android:text="@string/_30"
+                android:textSize="96sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_home_tv_city" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_home_rv_hours"
-            android:layout_width="374dp"
-            android:layout_height="97dp"
-            app:layout_constraintEnd_toStartOf="@+id/fragment_home_gl_top"
-            app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_home_tv_conditions" />
+            <TextView
+                android:id="@+id/fragment_home_tv_conditions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/roboto_medium_italic"
+                android:text="@string/day_weather_description"
+                app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_home_tv_temperature" />
 
-        <TextView
-            android:id="@+id/fragment_home_tv_forecast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/_10_day_forecast"
-            app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_home_rv_hours" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment_home_rv_hours"
+                android:layout_width="371dp"
+                android:layout_height="99dp"
+                android:background="@drawable/shape_rv"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_home_gl_top"
+                app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_home_tv_conditions" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_home_rv_days"
-            android:layout_width="380dp"
-            android:layout_height="200dp"
-            app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_home_tv_forecast" />
+            <TextView
+                android:id="@+id/fragment_home_tv_forecast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/roboto_medium_italic"
+                android:text="@string/_10_day_forecast"
+                app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_home_rv_hours" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_home_gl_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="20dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment_home_rv_days"
+                android:layout_width="371dp"
+                android:layout_height="204dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/shape_rv"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_home_gl_top"
+                app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_home_tv_forecast" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_home_gl_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="394dp" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto_medium_italic"
+                android:text="Posts"
+                app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_home_rv_days" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_home_rv_posts"
-            android:layout_width="371dp"
-            android:layout_height="196dp"
-            app:layout_constraintEnd_toStartOf="@+id/fragment_home_gl_top"
-            app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment_home_rv_posts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_home_gl_top"
+                app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Posts"
-            app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_home_rv_days" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/fragment_home_gl_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="20dp" />
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/fragment_home_gl_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="394dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>
