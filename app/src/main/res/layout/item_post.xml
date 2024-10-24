@@ -37,14 +37,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Name"
-                android:textStyle="bold" />
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_medium" />
 
             <TextView
                 android:id="@+id/item_post_tv_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Username" />
+                android:text="Username"
+                android:fontFamily="@font/roboto_medium_italic"
+                android:textColor="#808080" />
 
             <TextView
                 android:id="@+id/item_post_tv_date"
@@ -52,7 +55,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Date" />
+                android:text="Date"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_light"/>
         </LinearLayout>
 
         <LinearLayout
@@ -65,7 +70,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Post" />
+                android:text="Post"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,7 +85,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Likes" />
+                android:text="Likes"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_light" />
         </LinearLayout>
 
     </LinearLayout>

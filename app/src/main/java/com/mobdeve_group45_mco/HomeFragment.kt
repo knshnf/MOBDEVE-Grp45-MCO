@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobdeve_group45_mco.dailyWeather.DailyAdapter
 import com.mobdeve_group45_mco.databinding.FragmentHomeBinding
-import com.mobdeve_group45_mco.databinding.FragmentLoginBinding
 import com.mobdeve_group45_mco.hourlyWeather.HourlyAdapter
 import com.mobdeve_group45_mco.post.PostAdapter
 

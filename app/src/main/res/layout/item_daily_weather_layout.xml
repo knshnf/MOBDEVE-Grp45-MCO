@@ -19,7 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:fontFamily="@font/roboto_regular"
+            />
 
         <ImageView
             android:id="@+id/daily_weather_tv_icon"
@@ -34,7 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical|end" />
+            android:gravity="center_vertical|end"
+            android:fontFamily="@font/roboto_regular"
+            />
     </LinearLayout>
 
     <View
