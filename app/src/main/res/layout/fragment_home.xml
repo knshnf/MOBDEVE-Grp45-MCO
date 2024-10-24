@@ -96,6 +96,7 @@
                 android:id="@+id/fragment_home_rv_posts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/shape_rv"
                 app:layout_constraintEnd_toStartOf="@+id/fragment_home_gl_top"
                 app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />

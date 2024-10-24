@@ -8,22 +8,23 @@
     android:background="@color/white"
     tools:context=".LoginActivity">
 
+
     <ImageView
         android:id="@+id/fragment_login_iv_Login"
-        android:layout_width="389dp"
-        android:layout_height="426dp"
+        android:layout_width="289dp"
+        android:layout_height="245dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.095"
-        app:srcCompat="@drawable/breezi" />
+        app:layout_constraintVertical_bias="0.113"
+        app:srcCompat="@drawable/breezi_home" />
 
     <EditText
         android:id="@+id/fragment_login_et_email"
         android:layout_width="216dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="5dp"
         android:autofillHints="Email"
         android:background="@drawable/text_bg"
         android:ems="10"
@@ -33,15 +34,17 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/fragment_login_et_password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_iv_Login"
+        app:layout_constraintVertical_bias="0.815" />
 
     <EditText
         android:id="@+id/fragment_login_et_password"
         android:layout_width="216dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="276dp"
+        android:layout_marginTop="95dp"
+        android:layout_marginBottom="288dp"
         android:autofillHints="Password"
         android:background="@drawable/text_bg"
         android:ems="10"
@@ -51,21 +54,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_iv_Login"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/fragment_login_btn_signIn"
         android:layout_width="216dp"
         android:layout_height="48dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="84dp"
-        android:layout_marginBottom="184dp"
+        android:layout_marginBottom="192dp"
         android:background="@drawable/button_shape_green"
         android:text="@string/sign_in"
         android:tint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.836"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_et_password" />
 
     <!--    <Button-->
     <!--        android:id="@+id/acitivity_login_btn_signUp"-->

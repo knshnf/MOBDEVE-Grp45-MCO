@@ -16,6 +16,16 @@
         <!-- Display Name -->
 
         <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="378dp"
+            android:layout_height="143dp"
+            android:src="@drawable/breezi_home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
             android:id="@+id/fragment_profile_img_profile"
             android:layout_width="133dp"
             android:layout_height="121dp"
@@ -25,16 +35,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/anime_style_clouds"
-            />
+            app:srcCompat="@drawable/anime_style_clouds" />
 
         <TextView
             android:id="@+id/fragment_profile_tv_bio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:gravity="center"
             android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:textColor="@color/black"
             android:text="I am MOBDEBVE \nI will teach you mobie development"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,12 +69,12 @@
             android:id="@+id/fragment_profile_btn_Logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="664dp"
+            android:layout_marginBottom="680dp"
             android:background="@drawable/button_shape_red"
             android:text="Logout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintHorizontal_bias="0.978"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
