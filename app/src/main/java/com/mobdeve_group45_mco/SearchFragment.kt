@@ -49,7 +49,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewBinding.fragmentSearchRvResults.adapter = SearchAdapter(DataGenerator.searchResultsData())
+        viewBinding.fragmentSearchRvResults.adapter = SearchAdapter(DataGenerator.searchResultsData(), parentFragmentManager)
         viewBinding.fragmentSearchRvResults.layoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration = DividerItemDecoration(
             viewBinding.fragmentSearchRvResults.context,
@@ -59,6 +59,8 @@ class SearchFragment : Fragment() {
         viewBinding.fragmentSearchRvResults.layoutManager = LinearLayoutManager(requireContext())
 
     }
+
+
 
     companion object {
         /**
