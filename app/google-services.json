@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "186431525022",
+    "project_id": "breezi-683f2",
+    "storage_bucket": "breezi-683f2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186431525022:android:4c2df0134e21df50ffeb8f",
+        "android_client_info": {
+          "package_name": "com.mobdeve_group45_mco"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT6Gt7Ic0LlebBNuUvTA64lltIOsOX-Ms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

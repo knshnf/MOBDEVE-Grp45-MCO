@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.firebase.ui.auth.AuthUI
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,10 +45,14 @@ class ProfileFragment : Fragment() {
 
         val logoutBtn = view.findViewById<Button>(R.id.fragment_profile_btn_Logout)
         logoutBtn.setOnClickListener {
-            // Navigate to the login page and finish the current MainActivity
-            val navIntent = Intent(requireContext(), LoginActivity::class.java)
-            navIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(navIntent)
+            AuthUI.getInstance()
+                .signOut(requireContext())
+                .addOnCompleteListener {
+                    // Navigate to the login page and finish the current MainActivity
+                    val navIntent = Intent(requireContext(), LoginActivity::class.java)
+                    navIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(navIntent)
+                }
         }
     }
 
