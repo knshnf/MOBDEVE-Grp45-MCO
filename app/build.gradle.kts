@@ -54,4 +54,6 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
     implementation (libs.firebase.ui.auth.v720)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 }

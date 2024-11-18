@@ -1,12 +1,15 @@
 package com.mobdeve_group45_mco.dailyWeather
 
-class DailyWeather(day: String, iconId: Int, tempRange: String) {
-    var day= day
+class DailyWeather(time: String, weatherCode: Int, minTemp: Number, maxtemp: Number) {
+    var time = time
         private set
 
-    var iconId = iconId
+    var weatherCode = weatherCode
         private set
 
-    var tempRange = tempRange
+    var minTemp = minTemp
+        private set
+
+    var maxTemp = maxtemp
         private set
 }

@@ -1,16 +1,21 @@
 package com.mobdeve_group45_mco
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mobdeve_group45_mco.api.ApiCall
 import com.mobdeve_group45_mco.dailyWeather.DailyAdapter
 import com.mobdeve_group45_mco.databinding.FragmentHomeBinding
+import com.mobdeve_group45_mco.forecast.Forecast
 import com.mobdeve_group45_mco.hourlyWeather.HourlyAdapter
+import com.mobdeve_group45_mco.hourlyWeather.HourlyWeather
 import com.mobdeve_group45_mco.post.PostAdapter
+import com.mobdeve_group45_mco.utils.Utils
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +32,6 @@ class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var viewBinding: FragmentHomeBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,20 +49,29 @@ class HomeFragment : Fragment() {
         return viewBinding.getRoot()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewBinding.fragmentHomeRvHours.adapter = HourlyAdapter(DataGenerator.hourlyWeatherData())
+
+    fun callback(forecast: Forecast) {
+        viewBinding.fragmentHomeTvConditions.text = Utils.getWeatherDescription(forecast.current.weatherCode)
+        viewBinding.fragmentHomeRvHours.adapter = HourlyAdapter(forecast.hourly)
         viewBinding.fragmentHomeRvHours.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        viewBinding.fragmentHomeRvDays.adapter = DailyAdapter(DataGenerator.dailyWeatherData())
+        viewBinding.fragmentHomeRvDays.adapter = DailyAdapter(forecast.daily)
         viewBinding.fragmentHomeRvDays.layoutManager = LinearLayoutManager(requireContext())
         viewBinding.fragmentHomeRvPosts.adapter = PostAdapter(DataGenerator.loadPostData())
         viewBinding.fragmentHomeRvPosts.layoutManager = LinearLayoutManager(requireContext())
+        viewBinding.fragmentHomeTvTemperature.text = forecast.current.temperature.toString() + "°"
         val dividerItemDecoration = DividerItemDecoration(
             viewBinding.fragmentHomeRvPosts.context,
-            1
+            LinearLayoutManager.VERTICAL
         )
         viewBinding.fragmentHomeRvPosts.addItemDecoration(dividerItemDecoration)
-        viewBinding.fragmentHomeRvPosts.layoutManager = LinearLayoutManager(requireContext())
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        ApiCall().getForecast(requireContext(), { forecast ->
+            callback(forecast)
+        }, 120.9822, 14.6042)
     }
 
     companion object {

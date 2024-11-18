@@ -46,9 +46,9 @@ class AddLocationFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewBinding.fragmentHomeRvHours.adapter = HourlyAdapter(DataGenerator.hourlyWeatherData())
+//        viewBinding.fragmentHomeRvHours.adapter = HourlyAdapter(DataGenerator.hourlyWeatherData())
         viewBinding.fragmentHomeRvHours.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        viewBinding.fragmentHomeRvDays.adapter = DailyAdapter(DataGenerator.dailyWeatherData())
+//        viewBinding.fragmentHomeRvDays.adapter = DailyAdapter(DataGenerator.dailyWeatherData())
         viewBinding.fragmentHomeRvDays.layoutManager = LinearLayoutManager(requireContext())
         viewBinding.fragmentHomeRvPosts.adapter = PostAdapter(DataGenerator.loadPostData())
         viewBinding.fragmentHomeRvPosts.layoutManager = LinearLayoutManager(requireContext())
