@@ -1,6 +1,7 @@
 package com.mobdeve_group45_mco.utils
 
 import android.util.Log
+import com.google.gson.Gson
 import com.mobdeve_group45_mco.R
 import com.mobdeve_group45_mco.dailyWeather.DailyWeather
 import com.mobdeve_group45_mco.forecast.Current
@@ -273,6 +274,15 @@ class Utils {
             }
 
             return locations
+        }
+        private val gson = Gson()
+
+        fun serializeForecast(forecast: Forecast): String {
+            return gson.toJson(forecast)
+        }
+
+        fun deserializeForecast(json: String): Forecast {
+            return gson.fromJson(json, Forecast::class.java)
         }
 
     }
