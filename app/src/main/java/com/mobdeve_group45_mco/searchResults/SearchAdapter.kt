@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve_group45_mco.databinding.ItemSearchBinding
+import com.mobdeve_group45_mco.forecast.Forecast
 
 class SearchAdapter(
-    private val searchResults: List<Search>,
+    private val searchResults: ArrayList<Forecast>,
     private val fragmentManager: FragmentManager
 ) : RecyclerView.Adapter<SearchViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {

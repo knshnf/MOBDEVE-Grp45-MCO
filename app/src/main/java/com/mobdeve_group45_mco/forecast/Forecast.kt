@@ -3,8 +3,7 @@ package com.mobdeve_group45_mco.forecast
 import com.mobdeve_group45_mco.dailyWeather.DailyWeather
 import com.mobdeve_group45_mco.hourlyWeather.HourlyWeather
 
-class Forecast(hourly: ArrayList<HourlyWeather>, daily: ArrayList<DailyWeather>, current: Current,
-               latitude: Number, longitude: Number) {
+class Forecast(hourly: ArrayList<HourlyWeather>, daily: ArrayList<DailyWeather>, current: Current) {
     var hourly = hourly
         private set
 
@@ -14,9 +13,5 @@ class Forecast(hourly: ArrayList<HourlyWeather>, daily: ArrayList<DailyWeather>,
     var current = current
         private set
 
-    var latitude =  latitude
-        private set
-
-    var longitude =  longitude
-        private set
+    lateinit var location: Location
 }

@@ -1,7 +1,6 @@
 package com.mobdeve_group45_mco.hourlyWeather
 
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve_group45_mco.R
 import com.mobdeve_group45_mco.databinding.ItemHourlyWeatherLayoutBinding
 import com.mobdeve_group45_mco.utils.Utils
 

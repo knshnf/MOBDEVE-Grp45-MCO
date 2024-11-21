@@ -1,7 +1,6 @@
 package com.mobdeve_group45_mco
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.mobdeve_group45_mco.dailyWeather.DailyAdapter
 import com.mobdeve_group45_mco.databinding.FragmentHomeBinding
 import com.mobdeve_group45_mco.forecast.Forecast
 import com.mobdeve_group45_mco.hourlyWeather.HourlyAdapter
-import com.mobdeve_group45_mco.hourlyWeather.HourlyWeather
 import com.mobdeve_group45_mco.post.PostAdapter
 import com.mobdeve_group45_mco.utils.Utils
 
@@ -59,6 +57,7 @@ class HomeFragment : Fragment() {
         viewBinding.fragmentHomeRvPosts.adapter = PostAdapter(DataGenerator.loadPostData())
         viewBinding.fragmentHomeRvPosts.layoutManager = LinearLayoutManager(requireContext())
         viewBinding.fragmentHomeTvTemperature.text = forecast.current.temperature.toString() + "°"
+        viewBinding.fragmentHomeTvCity.text = forecast.location.name
         val dividerItemDecoration = DividerItemDecoration(
             viewBinding.fragmentHomeRvPosts.context,
             LinearLayoutManager.VERTICAL
@@ -71,7 +70,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         ApiCall().getForecast(requireContext(), { forecast ->
             callback(forecast)
-        }, 120.9822, 14.6042)
+        },  52.52437, 13.41053)
     }
 
     companion object {

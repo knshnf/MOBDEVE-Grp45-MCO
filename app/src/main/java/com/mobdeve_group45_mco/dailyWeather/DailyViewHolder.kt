@@ -1,7 +1,6 @@
 package com.mobdeve_group45_mco.dailyWeather
 
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve_group45_mco.R
 import com.mobdeve_group45_mco.databinding.ItemDailyWeatherLayoutBinding
 import com.mobdeve_group45_mco.utils.Utils
 

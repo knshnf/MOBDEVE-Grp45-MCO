@@ -1,9 +1,7 @@
 package com.mobdeve_group45_mco.post
 
-import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve_group45_mco.databinding.ItemPostBinding
-import com.mobdeve_group45_mco.post.Post
 
 class PostViewHolder(private val viewBinding: ItemPostBinding) : RecyclerView.ViewHolder(viewBinding.root){
     fun bindData(post: Post){

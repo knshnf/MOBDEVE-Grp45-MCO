@@ -3,19 +3,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.mobdeve_group45_mco.R
-import com.mobdeve_group45_mco.dailyWeather.DailyAdapter
 import com.mobdeve_group45_mco.databinding.FragmentAddLocationBinding
-import com.mobdeve_group45_mco.databinding.FragmentSearchBinding
-import com.mobdeve_group45_mco.hourlyWeather.HourlyAdapter
 import com.mobdeve_group45_mco.post.PostAdapter
-import com.mobdeve_group45_mco.searchResults.SearchAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
