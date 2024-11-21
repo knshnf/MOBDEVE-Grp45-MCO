@@ -77,6 +77,12 @@ class SearchFragment : Fragment() {
         })
     }
 
+    override fun onPause() {
+        super.onPause()
+        // Clear the text field when the fragment is no longer in the foreground
+        viewBinding.fragmentSearchEtSearchfield.text?.clear()
+    }
+
     fun callback(forecasts: ArrayList<Forecast>) {
         // Filter out forecasts where the name is null
         val filteredForecasts = forecasts.filter { forecast ->

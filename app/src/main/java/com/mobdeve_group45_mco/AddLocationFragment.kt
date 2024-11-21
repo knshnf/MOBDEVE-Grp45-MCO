@@ -1,8 +1,11 @@
 package com.mobdeve_group45_mco
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -40,28 +43,49 @@ class AddLocationFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Deserialize the forecastJson string into a Forecast object
-        val forecast = forecastJson?.let {
-            Utils.deserializeForecast(it)
-        }
+        val forecast = forecastJson?.let { Utils.deserializeForecast(it) }
 
-        // Use the forecast data to populate views
         forecast?.let {
-            viewBinding.fragmentHomeTvConditions.text = Utils.getWeatherDescription(forecast.current.weatherCode)
-            viewBinding.fragmentHomeRvHours.adapter = HourlyAdapter(forecast.hourly)
-            viewBinding.fragmentHomeRvHours.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            viewBinding.fragmentHomeRvDays.adapter = DailyAdapter(forecast.daily)
+            viewBinding.fragmentHomeTvConditions.text = Utils.getWeatherDescription(it.current.weatherCode)
+            viewBinding.fragmentHomeRvHours.adapter = HourlyAdapter(it.hourly)
+            viewBinding.fragmentHomeRvHours.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            viewBinding.fragmentHomeRvDays.adapter = DailyAdapter(it.daily)
             viewBinding.fragmentHomeRvDays.layoutManager = LinearLayoutManager(requireContext())
             viewBinding.fragmentHomeRvPosts.adapter = PostAdapter(DataGenerator.loadPostData())
             viewBinding.fragmentHomeRvPosts.layoutManager = LinearLayoutManager(requireContext())
-            viewBinding.fragmentHomeTvTemperature.text = forecast.current.temperature.toString() + "°"
-            viewBinding.fragmentHomeTvCity.text = forecast.location.name
+            viewBinding.fragmentHomeTvTemperature.text = "${it.current.temperature}°"
+            viewBinding.fragmentHomeTvCity.text = it.location.name
             val dividerItemDecoration = DividerItemDecoration(
                 viewBinding.fragmentHomeRvPosts.context,
                 LinearLayoutManager.VERTICAL
             )
             viewBinding.fragmentHomeRvPosts.addItemDecoration(dividerItemDecoration)
+
+            // Handle button click to save Forecast in SharedPreferences
+            viewBinding.fragmentAddLocationBtnAdd.setOnClickListener {
+                saveForecastToSharedPreferences(forecast)
+                dismiss()
+            }
         }
+    }
+
+    private fun saveForecastToSharedPreferences(forecast: Forecast) {
+        // Obtain SharedPreferences
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
+            "ForecastPrefs", Context.MODE_PRIVATE
+        )
+        val editor = sharedPreferences.edit()
+
+        // Serialize Forecast object to JSON string
+        val forecastJson = Utils.serializeForecast(forecast)
+
+        // Save JSON string in SharedPreferences
+        editor.putString("saved_forecast", forecastJson)
+        editor.apply()
+
+        // Notify the user
+        Toast.makeText(requireContext(), "Forecast saved!", Toast.LENGTH_SHORT).show()
     }
 
     companion object {

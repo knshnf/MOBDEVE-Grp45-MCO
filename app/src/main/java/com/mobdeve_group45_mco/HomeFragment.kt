@@ -1,5 +1,7 @@
 package com.mobdeve_group45_mco
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,29 +29,45 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     private lateinit var viewBinding: FragmentHomeBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+
+    // Default coordinates for Manila, Philippines
+    private val defaultLatitude = 14.599512
+    private val defaultLongitude = 120.984222
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        viewBinding = FragmentHomeBinding.inflate(inflater,container,false)
-        return viewBinding.getRoot()
+        viewBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        return viewBinding.root
+    }
+
+    private fun getCoordinatesFromSharedPreferences(): Pair<Double, Double> {
+        // Retrieve the saved JSON string from SharedPreferences
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("ForecastPrefs", Context.MODE_PRIVATE)
+        val forecastJson = sharedPreferences.getString("saved_forecast", null)
+
+        // If the JSON is null (i.e., no saved forecast), return default coordinates
+        if (forecastJson == null) {
+            return Pair(defaultLatitude, defaultLongitude)
+        }
+
+        // Deserialize the JSON string into a Forecast object
+        val forecast = Utils.deserializeForecast(forecastJson)
+
+        // Extract latitude and longitude from the Forecast object (assuming the Forecast has location data)
+        val latitude = forecast?.location?.latitude ?: defaultLatitude
+        val longitude = forecast?.location?.longitude ?: defaultLongitude
+
+        return Pair(latitude, longitude)
     }
 
 
-    fun callback(forecast: Forecast) {
+    private fun callback(forecast: Forecast) {
+        // Bind the forecast data to the views
         viewBinding.fragmentHomeTvConditions.text = Utils.getWeatherDescription(forecast.current.weatherCode)
         viewBinding.fragmentHomeRvHours.adapter = HourlyAdapter(forecast.hourly)
         viewBinding.fragmentHomeRvHours.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -57,18 +75,19 @@ class HomeFragment : Fragment() {
         viewBinding.fragmentHomeRvDays.layoutManager = LinearLayoutManager(requireContext())
         viewBinding.fragmentHomeRvPosts.adapter = PostAdapter(DataGenerator.loadPostData())
         viewBinding.fragmentHomeRvPosts.layoutManager = LinearLayoutManager(requireContext())
-        viewBinding.fragmentHomeTvTemperature.text = forecast.current.temperature.toString() + "°"
+        viewBinding.fragmentHomeTvTemperature.text = "${forecast.current.temperature}°"
         viewBinding.fragmentHomeTvCity.text = forecast.location.name
-        val dividerItemDecoration = DividerItemDecoration(
-            viewBinding.fragmentHomeRvPosts.context,
-            LinearLayoutManager.VERTICAL
-        )
+        val dividerItemDecoration = DividerItemDecoration(viewBinding.fragmentHomeRvPosts.context, LinearLayoutManager.VERTICAL)
         viewBinding.fragmentHomeRvPosts.addItemDecoration(dividerItemDecoration)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Retrieve coordinates from SharedPreferences or use default coordinates
+        val (latitude, longitude) = getCoordinatesFromSharedPreferences()
+
+        // Make the API call using the retrieved latitude and longitude
         ApiCall().getForecast(requireContext(), { forecast ->
             try {
                 callback(forecast)
@@ -76,20 +95,10 @@ class HomeFragment : Fragment() {
                 e.printStackTrace()
                 Log.e("CallbackError", "An error occurred in the callback: ${e.message}")
             }
-
-        },  52.52437, 13.41053)
+        }, latitude, longitude)  // Pass the coordinates to the API call
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             HomeFragment().apply {
