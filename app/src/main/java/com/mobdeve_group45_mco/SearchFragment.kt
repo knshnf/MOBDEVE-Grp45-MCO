@@ -78,8 +78,15 @@ class SearchFragment : Fragment() {
     }
 
     fun callback(forecasts: ArrayList<Forecast>) {
-        Log.i("Search Callback", forecasts.toString())
-        viewBinding.fragmentSearchRvResults.adapter = SearchAdapter(forecasts, parentFragmentManager)
+        // Filter out forecasts where the name is null
+        val filteredForecasts = forecasts.filter { forecast ->
+            forecast.location.name != null && forecast.location.name != "Unknown"
+        }.distinctBy { forecast ->
+            forecast.location.country // Ensure no duplicates for the same country
+        }.toCollection(ArrayList()) // Convert to ArrayList
+
+        Log.i("Filtered Forecasts", filteredForecasts.toString())
+        viewBinding.fragmentSearchRvResults.adapter = SearchAdapter(filteredForecasts, parentFragmentManager)
         viewBinding.fragmentSearchRvResults.layoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration = DividerItemDecoration(
             viewBinding.fragmentSearchRvResults.context,
