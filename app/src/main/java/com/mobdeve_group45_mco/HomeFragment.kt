@@ -1,6 +1,7 @@
 package com.mobdeve_group45_mco
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,7 +70,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ApiCall().getForecast(requireContext(), { forecast ->
-            callback(forecast)
+            try {
+                callback(forecast)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("CallbackError", "An error occurred in the callback: ${e.message}")
+            }
+
         },  52.52437, 13.41053)
     }
 

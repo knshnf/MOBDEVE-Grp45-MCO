@@ -91,7 +91,12 @@ class SearchFragment : Fragment() {
     fun performSearch(query: String) {
         if (query.isNotEmpty() && query.length > 2) {
             ApiCall().getForecasts(requireContext(), { forecasts ->
-                callback(forecasts)
+                try {
+                    callback(forecasts)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.e("CallbackError", "An error occurred in the callback: ${e.message}")
+                }
             }, query)
         } else {
             Log.i("Search", "Query is empty, no search performed.")
