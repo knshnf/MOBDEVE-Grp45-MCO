@@ -62,6 +62,13 @@ class ProfileFragment : Fragment() {
                     startActivity(navIntent)
                 }
         }
+
+        viewBinding.fragmentProfileBtnEditProfile.setOnClickListener {
+            val intent = Intent(requireContext(), EditProfile::class.java)
+            intent.putExtra("bio", viewBinding.fragmentProfileTvBio.text.toString())
+            startActivity(intent)
+        }
+
     }
 
     companion object {
