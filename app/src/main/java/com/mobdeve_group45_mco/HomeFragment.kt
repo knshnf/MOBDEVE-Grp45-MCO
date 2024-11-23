@@ -1,6 +1,7 @@
 package com.mobdeve_group45_mco
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -96,6 +97,12 @@ class HomeFragment : Fragment() {
                 Log.e("CallbackError", "An error occurred in the callback: ${e.message}")
             }
         }, latitude, longitude)  // Pass the coordinates to the API call
+
+        // Add listener for Create Post button
+        viewBinding.btnCreatePost.setOnClickListener {
+            val intent = Intent(requireContext(), CreatePost::class.java)
+            startActivity(intent)
+        }
     }
 
     companion object {

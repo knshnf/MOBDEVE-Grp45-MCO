@@ -52,6 +52,7 @@ class ApiCall {
                         lon = longitude.toString()
                     )
 
+
                     Log.i("Enqueue", "Enqueuing Reverse Geocoding API Call")
 
                     reverseGeocodingCall.enqueue(object : Callback<JsonObject> {
