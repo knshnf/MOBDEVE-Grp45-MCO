@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve_group45_mco.databinding.FragmentProfileBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,7 +29,7 @@ class ProfileFragment : Fragment() {
     private var param2: String? = null
     private lateinit var viewBinding: FragmentProfileBinding
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
-
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,7 @@ class ProfileFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        db = FirebaseFirestore.getInstance()
     }
 
     override fun onCreateView(
@@ -47,6 +50,8 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loadUserProfile()
 
         viewBinding.fragmentProfileTvName.text = auth.currentUser?.displayName
         viewBinding.fragmentProfileTvUsername.text = auth.currentUser?.email
@@ -69,6 +74,51 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
+    }
+
+    private fun loadUserProfile() {
+        val currentUser = auth.currentUser ?: return
+
+        db.collection("users")
+            .document(currentUser.uid)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    // Get user data from Firestore
+                    val name = document.getString("name") ?: currentUser.displayName
+                    val bio = document.getString("bio") ?: ""
+
+                    // Update UI with user data
+                    viewBinding.fragmentProfileTvName.text = name
+                    viewBinding.fragmentProfileTvBio.text = bio
+                } else {
+                    // If document doesn't exist, create it with default values
+                    val userProfile = UserProfile(
+                        name = currentUser.displayName ?: "",
+                        bio = ""
+                    )
+
+                    db.collection("users")
+                        .document(currentUser.uid)
+                        .set(userProfile)
+                        .addOnSuccessListener {
+                            // After creating the document, display the default values
+                            viewBinding.fragmentProfileTvName.text = currentUser.displayName
+                            viewBinding.fragmentProfileTvBio.text = ""
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(requireContext(), "Error creating profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "PFpage error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadUserProfile()
     }
 
     companion object {
