@@ -18,6 +18,16 @@
             android:layout_height="wrap_content"
             tools:context=".MainActivity">
 
+            <Button
+                android:id="@+id/btn_create_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Post"
+                app:layout_constraintBottom_toTopOf="@+id/fragment_home_rv_posts"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_home_gl_top"
+                app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_home_rv_days" />
+
             <TextView
                 android:id="@+id/fragment_home_tv_city"
                 android:layout_width="wrap_content"
@@ -84,7 +94,8 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="36dp"
                 android:fontFamily="@font/roboto_medium_italic"
                 android:text="Posts"
                 app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
@@ -94,10 +105,12 @@
                 android:id="@+id/fragment_home_rv_posts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="68dp"
                 android:background="@drawable/shape_rv"
                 app:layout_constraintEnd_toStartOf="@+id/fragment_home_gl_top"
+                app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="@+id/fragment_home_gl_left"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/fragment_home_rv_days" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/fragment_home_gl_left"
