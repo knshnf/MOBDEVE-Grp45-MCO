@@ -45,7 +45,7 @@
             android:fontFamily="@font/roboto_regular"
             android:gravity="center"
             android:textColor="@color/black"
-            android:text="I am MOBDEBVE \nI will teach you mobie development"
+            android:text=""
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.487"

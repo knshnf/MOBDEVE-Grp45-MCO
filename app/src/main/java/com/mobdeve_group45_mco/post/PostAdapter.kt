@@ -3,6 +3,7 @@ package com.mobdeve_group45_mco.post
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve_group45_mco.Post
 import com.mobdeve_group45_mco.databinding.ItemPostBinding
 
 class PostAdapter(private val posts: ArrayList<Post>): RecyclerView.Adapter<PostViewHolder>(){

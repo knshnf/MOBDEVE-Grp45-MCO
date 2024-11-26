@@ -1,7 +1,9 @@
 package com.mobdeve_group45_mco
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve_group45_mco.dailyWeather.DailyAdapter
 import com.mobdeve_group45_mco.databinding.FragmentAddLocationBinding
 import com.mobdeve_group45_mco.forecast.Forecast
@@ -24,6 +27,8 @@ private const val ARG_PARAM2 = "param2"
 class AddLocationFragment : BottomSheetDialogFragment() {
     private var forecastJson: String? = null
     private lateinit var viewBinding: FragmentAddLocationBinding
+    private val db = FirebaseFirestore.getInstance()
+    private val postList = ArrayList<Post>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +45,23 @@ class AddLocationFragment : BottomSheetDialogFragment() {
         return viewBinding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        db.collection("posts")
+            .get()
+            .addOnSuccessListener { documents ->
+                postList.clear() // Clear existing data before adding new ones
+                for (document in documents) {
+                    val post = document.toObject(Post::class.java)
+                    postList.add(post)
+                }
+                PostAdapter(postList).notifyDataSetChanged() // Notify adapter of data changes
+            }
+            .addOnFailureListener { exception ->
+                Log.e("FirestoreError", "Error fetching posts: ${exception.message}")
+            }
 
         val forecast = forecastJson?.let { Utils.deserializeForecast(it) }
 
@@ -52,7 +72,7 @@ class AddLocationFragment : BottomSheetDialogFragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             viewBinding.fragmentHomeRvDays.adapter = DailyAdapter(it.daily)
             viewBinding.fragmentHomeRvDays.layoutManager = LinearLayoutManager(requireContext())
-            viewBinding.fragmentHomeRvPosts.adapter = PostAdapter(DataGenerator.loadPostData())
+            viewBinding.fragmentHomeRvPosts.adapter = PostAdapter(postList)
             viewBinding.fragmentHomeRvPosts.layoutManager = LinearLayoutManager(requireContext())
             viewBinding.fragmentHomeTvTemperature.text = "${it.current.temperature}°"
             viewBinding.fragmentHomeTvCity.text = it.location.name

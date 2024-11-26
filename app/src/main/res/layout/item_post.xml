@@ -50,15 +50,6 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/item_post_tv_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_medium_italic"
-                android:text="Username"
-                android:textColor="#808080" />
-
-            <TextView
                 android:id="@+id/item_post_tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
