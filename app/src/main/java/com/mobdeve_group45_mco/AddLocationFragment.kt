@@ -48,14 +48,18 @@ class AddLocationFragment : BottomSheetDialogFragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val forecast = forecastJson?.let { Utils.deserializeForecast(it) }
 
         db.collection("posts")
             .get()
             .addOnSuccessListener { documents ->
                 postList.clear() // Clear existing data before adding new ones
                 for (document in documents) {
-                    val post = document.toObject(Post::class.java)
-                    postList.add(post)
+                    if (document.getString("city") == forecast?.location?.name &&
+                        document.getString("countryCode") == forecast?.location?.country_code) {
+                        val post = document.toObject(Post::class.java)
+                        postList.add(post)
+                    }
                 }
                 PostAdapter(postList).notifyDataSetChanged() // Notify adapter of data changes
             }
@@ -63,7 +67,7 @@ class AddLocationFragment : BottomSheetDialogFragment() {
                 Log.e("FirestoreError", "Error fetching posts: ${exception.message}")
             }
 
-        val forecast = forecastJson?.let { Utils.deserializeForecast(it) }
+
 
         forecast?.let {
             viewBinding.fragmentHomeTvConditions.text = Utils.getWeatherDescription(it.current.weatherCode)
