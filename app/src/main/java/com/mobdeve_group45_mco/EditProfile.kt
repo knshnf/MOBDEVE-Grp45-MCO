@@ -1,7 +1,12 @@
 package com.mobdeve_group45_mco
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -18,6 +23,24 @@ class EditProfile : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+
+
+    // Launcher for picking an image from the gallery
+    private var selectedImageUri: Uri? = null
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            val imageUri = data?.data
+            if (imageUri != null) {
+                selectedImageUri = imageUri
+                binding.editProfileImgPicture.setImageURI(imageUri)
+            } else {
+                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Image selection canceled", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +80,14 @@ class EditProfile : AppCompatActivity() {
         }
 
         binding.editProfileBtnUploadPicture.setOnClickListener {
-            // TODO: Implement picture upload functionality
+            pickImageFromGallery()
             Toast.makeText(this, "Picture upload functionality coming soon", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun pickImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        pickImageLauncher.launch(intent)
     }
 
     private fun saveUserProfile() {
