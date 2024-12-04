@@ -35,7 +35,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/anime_style_clouds" />
+            app:srcCompat="@drawable/default_profile_pic" />
 
         <TextView
             android:id="@+id/fragment_profile_tv_bio"

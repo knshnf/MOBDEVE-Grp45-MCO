@@ -2,15 +2,18 @@ package com.mobdeve_group45_mco
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.mobdeve_group45_mco.databinding.FragmentProfileBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,6 +33,7 @@ class ProfileFragment : Fragment() {
     private lateinit var viewBinding: FragmentProfileBinding
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var db: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +42,7 @@ class ProfileFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         db = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
     }
 
     override fun onCreateView(
@@ -76,6 +81,20 @@ class ProfileFragment : Fragment() {
 
     }
 
+    private fun loadImageFromFirebaseStorage(imagePath: String) {
+        val storageRef = storage.reference.child("profile_pictures/Bt1Y7gZNfrcns7l2MyXEPu3VGlu2.jpg")
+
+        Log.i("Hello", "Downloading file")
+        storageRef.downloadUrl.addOnSuccessListener { uri ->
+            // Using Glide to load the image into ImageView
+            Glide.with(this)
+                .load(uri)
+                .into(viewBinding.fragmentProfileImgProfile)
+        }.addOnFailureListener { e ->
+//            Toast.makeText(this, "Failed to load image: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun loadUserProfile() {
         val currentUser = auth.currentUser ?: return
 
@@ -87,10 +106,14 @@ class ProfileFragment : Fragment() {
                     // Get user data from Firestore
                     val name = document.getString("name") ?: currentUser.displayName
                     val bio = document.getString("bio") ?: ""
+                    val profilePicUrl = document.getString("profile_pic")
 
                     // Update UI with user data
                     viewBinding.fragmentProfileTvName.text = name
                     viewBinding.fragmentProfileTvBio.text = bio
+                    profilePicUrl?.let {
+                            loadImageFromFirebaseStorage(profilePicUrl)
+                        }
                 } else {
                     // If document doesn't exist, create it with default values
                     val userProfile = UserProfile(

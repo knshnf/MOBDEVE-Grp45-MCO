@@ -5,24 +5,29 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.mobdeve_group45_mco.databinding.ActivityEditProfileBinding
 
 data class UserProfile(
     val name: String = "",
-    val bio: String = ""
+    val bio: String = "",
+    val profile_pic: String = ""
 )
 
 class EditProfile : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
 
 
     // Launcher for picking an image from the gallery
@@ -49,6 +54,7 @@ class EditProfile : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
 
         val currentUser = auth.currentUser
 
@@ -57,15 +63,18 @@ class EditProfile : AppCompatActivity() {
                 .get()
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
-                        // Database exists, load data from it
+                        // Load data from Firestore
                         val name = document.getString("name") ?: user.displayName ?: ""
                         val bio = document.getString("bio") ?: ""
+                        val profilePicUrl = document.getString("profile_pic")
 
-                        // Set fields with existing data
                         binding.editProfileEtName.setText(name)
                         binding.editProfileEtBio.setText(bio)
+                        profilePicUrl?.let {
+                            loadImageFromFirebaseStorage(it)
+                        }
                     } else {
-                        // Database doesn't exist, use data from Firebase Auth
+                        // Use Firebase Auth data if Firestore data doesn't exist
                         binding.editProfileEtName.setText(user.displayName)
                         binding.editProfileEtBio.setText("")
                     }
@@ -85,6 +94,21 @@ class EditProfile : AppCompatActivity() {
         }
     }
 
+    private fun loadImageFromFirebaseStorage(imagePath: String) {
+        val storageRef = storage.reference.child(imagePath)
+
+        // Get the download URL and load it using Glide
+        storageRef.downloadUrl.addOnSuccessListener { uri ->
+            // Using Glide to load the image into ImageView
+
+            Glide.with(this)
+                .load(uri) // URI of the image
+                .into(binding.editProfileImgPicture) // ImageView to set the image in
+        }.addOnFailureListener { e ->
+            Toast.makeText(this, "Failed to load image: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         pickImageLauncher.launch(intent)
@@ -100,44 +124,38 @@ class EditProfile : AppCompatActivity() {
             return
         }
 
+        if (selectedImageUri != null) {
+            // Upload the image to Firebase Storage
+            val storageRef = storage.reference.child("profile_pictures/${currentUser.uid}.jpg")
+            storageRef.putFile(selectedImageUri!!)
+                .addOnSuccessListener {
+                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                        saveProfileToFirestore(currentUser, newName, newBio, "profile_pictures/${currentUser.uid}.jpg")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error uploading image: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            // Save profile without a new image
+            saveProfileToFirestore(currentUser, newName, newBio, null)
+        }
+    }
+
+    private fun saveProfileToFirestore(currentUser: FirebaseUser, newName: String, newBio: String, profilePicUrl: String?) {
         val userProfile = UserProfile(
             name = newName,
-            bio = newBio
+            bio = newBio,
+            profile_pic = profilePicUrl ?: ""
         )
 
-        // Check if user document exists before saving
         db.collection("users").document(currentUser.uid)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    // Update existing document
-                    db.collection("users")
-                        .document(currentUser.uid)
-                        .update(mapOf(
-                            "name" to newName,
-                            "bio" to newBio
-                        ))
-                        .addOnSuccessListener {
-                            updateAuthProfile(currentUser, newName)
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(this, "Error updating profile: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
-                } else {
-                    // Create new document
-                    db.collection("users")
-                        .document(currentUser.uid)
-                        .set(userProfile)
-                        .addOnSuccessListener {
-                            updateAuthProfile(currentUser, newName)
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(this, "Error creating profile: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
-                }
+            .set(userProfile)
+            .addOnSuccessListener {
+                updateAuthProfile(currentUser, newName)
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Error checking profile: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Error saving profile: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
