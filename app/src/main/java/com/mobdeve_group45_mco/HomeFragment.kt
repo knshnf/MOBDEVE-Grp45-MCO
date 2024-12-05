@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -62,8 +63,13 @@ class HomeFragment : Fragment() {
 
     private fun handleForecastData(forecast: Forecast) {
         currentForecast = forecast
+        Log.i("Hello!", forecast.current.isDay.toString())
+        if (forecast.current.isDay == 0) {
+            viewBinding.fragmentHomeFrameLayout.setBackgroundResource(R.drawable.anime_style_clouds_night)
+        }
 
         // Bind the forecast data to the views
+        viewBinding.fragmentHomeFrameLayout
         viewBinding.fragmentHomeTvConditions.text = Utils.getWeatherDescription(forecast.current.weatherCode)
         viewBinding.fragmentHomeRvHours.adapter = HourlyAdapter(forecast.hourly)
         viewBinding.fragmentHomeRvHours.layoutManager =
@@ -110,7 +116,7 @@ class HomeFragment : Fragment() {
         // Retrieve the saved JSON string from SharedPreferences
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("ForecastPrefs", Context.MODE_PRIVATE)
         val forecastJson = sharedPreferences.getString("saved_forecast", null)
-
+        Log.i("Hello", "Hello")
         if (forecastJson == null) {
             // If the JSON is null (i.e., no saved forecast), fetch the current location
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
@@ -140,6 +146,16 @@ class HomeFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun callback(forecast: Forecast) {
         currentForecast = forecast
+        Log.i("Hello!", forecast.current.isDay.toString())
+        if (forecast.current.isDay == 0) {
+            viewBinding.fragmentHomeFrameLayout.setBackgroundResource(R.drawable.anime_style_clouds_night)
+
+            // Set text color to white for the TextViews
+            viewBinding.fragmentHomeTvForecast.setTextColor(Color.WHITE)
+            viewBinding.fragmentHomeTvCity.setTextColor(Color.WHITE)
+            viewBinding.fragmentHomeTvTemperature.setTextColor(Color.WHITE)
+            viewBinding.fragmentHomeTvConditions.setTextColor(Color.WHITE)
+        }
 
         // Bind the forecast data to the views
         viewBinding.fragmentHomeTvConditions.text = Utils.getWeatherDescription(forecast.current.weatherCode)
