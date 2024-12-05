@@ -81,8 +81,8 @@ class ProfileFragment : Fragment() {
 
             // Set up logout button
             val logoutBtn = view.findViewById<Button>(R.id.fragment_profile_btn_Logout)
-//            logoutBtn.text = "Logout"
-//            logoutBtn.setBackgroundColor(Color.parseColor("#FF0000")) // Default logout color
+            logoutBtn.text = "Logout"
+            logoutBtn.setBackgroundColor(Color.parseColor("#FF0000")) // Default logout color
 
             logoutBtn.setOnClickListener {
                 AuthUI.getInstance()
@@ -106,6 +106,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun loadImageFromFirebaseStorage(imagePath: String) {
+        Log.i("hi", imagePath)
         val storageRef = storage.reference.child(imagePath)
 
         // Get the download URL and load it using Glide
@@ -137,7 +138,8 @@ class ProfileFragment : Fragment() {
                     viewBinding.fragmentProfileTvName.text = name
                     viewBinding.fragmentProfileTvBio.text = bio
                     profilePicUrl?.let {
-                            loadImageFromFirebaseStorage(it)
+                            Log.i("hi", profilePicUrl)
+                            loadImageFromFirebaseStorage(profilePicUrl)
                         }
                 } else {
                     // If document doesn't exist, create it with default values

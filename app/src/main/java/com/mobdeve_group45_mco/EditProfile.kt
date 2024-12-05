@@ -90,7 +90,7 @@ class EditProfile : AppCompatActivity() {
 
         binding.editProfileBtnUploadPicture.setOnClickListener {
             pickImageFromGallery()
-            Toast.makeText(this, "Picture upload functionality coming soon", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Picture upload functionality coming soon", Toast.LENGTH_SHORT).show()
         }
     }
 
