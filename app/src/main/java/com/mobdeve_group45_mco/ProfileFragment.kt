@@ -81,8 +81,8 @@ class ProfileFragment : Fragment() {
 
             // Set up logout button
             val logoutBtn = view.findViewById<Button>(R.id.fragment_profile_btn_Logout)
-            logoutBtn.text = "Logout"
-            logoutBtn.setBackgroundColor(Color.parseColor("#FF0000")) // Default logout color
+//            logoutBtn.text = "Logout"
+//            logoutBtn.setBackgroundColor(Color.parseColor("#FF0000")) // Default logout color
 
             logoutBtn.setOnClickListener {
                 AuthUI.getInstance()
