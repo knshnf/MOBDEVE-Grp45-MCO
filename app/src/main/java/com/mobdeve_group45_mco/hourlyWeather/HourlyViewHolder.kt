@@ -8,6 +8,6 @@ class HourlyViewHolder(private val viewBinding: ItemHourlyWeatherLayoutBinding) 
     fun bindData(hourlyWeather: HourlyWeather){
         this.viewBinding.hourlyWeatherTvHour.text = Utils.getHourIn12HourFormat(hourlyWeather.time)
         this.viewBinding.hourlyWeatherIvIcon.setImageResource(Utils.getWeatherIconByCode(hourlyWeather.weatherCode))
-        this.viewBinding.hourlyWeatherTvTemp.text = hourlyWeather.temp.toString()
+        this.viewBinding.hourlyWeatherTvTemp.text = hourlyWeather.temp.toString() + "°"
     }
 }

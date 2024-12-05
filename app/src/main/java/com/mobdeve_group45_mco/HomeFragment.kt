@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +25,8 @@ import com.mobdeve_group45_mco.forecast.Forecast
 import com.mobdeve_group45_mco.hourlyWeather.HourlyAdapter
 import com.mobdeve_group45_mco.post.PostAdapter
 import com.mobdeve_group45_mco.utils.Utils
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +41,7 @@ private const val ARG_PARAM2 = "param2"
 class HomeFragment : Fragment() {
 
     private lateinit var viewBinding: FragmentHomeBinding
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val db = FirebaseFirestore.getInstance()
     private val postList = ArrayList<Post>()
 
@@ -54,22 +60,80 @@ class HomeFragment : Fragment() {
         return viewBinding.root
     }
 
+    private fun handleForecastData(forecast: Forecast) {
+        currentForecast = forecast
+
+        // Bind the forecast data to the views
+        viewBinding.fragmentHomeTvConditions.text = Utils.getWeatherDescription(forecast.current.weatherCode)
+        viewBinding.fragmentHomeRvHours.adapter = HourlyAdapter(forecast.hourly)
+        viewBinding.fragmentHomeRvHours.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        viewBinding.fragmentHomeRvDays.adapter = DailyAdapter(forecast.daily)
+        viewBinding.fragmentHomeRvDays.layoutManager = LinearLayoutManager(requireContext())
+        viewBinding.fragmentHomeRvPosts.adapter = PostAdapter(postList)
+        viewBinding.fragmentHomeRvPosts.layoutManager = LinearLayoutManager(requireContext())
+        viewBinding.fragmentHomeTvTemperature.text = "${forecast.current.temperature}°"
+        viewBinding.fragmentHomeTvCity.text = forecast.location.name
+        val dividerItemDecoration = DividerItemDecoration(
+            viewBinding.fragmentHomeRvPosts.context,
+            LinearLayoutManager.VERTICAL
+        )
+        viewBinding.fragmentHomeRvPosts.addItemDecoration(dividerItemDecoration)
+
+        // Fetch posts related to the city
+        fetchPosts(forecast)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun fetchPosts(forecast: Forecast) {
+        db.collection("posts")
+            .get()
+            .addOnSuccessListener { documents ->
+                postList.clear()
+                for (document in documents) {
+                    if (document.getString("city") == forecast.location.name &&
+                        document.getString("countryCode") == forecast.location.country_code
+                    ) {
+                        val post = document.toObject(Post::class.java)
+                        postList.add(post)
+                    }
+                }
+                viewBinding.fragmentHomeRvPosts.adapter?.notifyDataSetChanged()
+            }
+            .addOnFailureListener { exception ->
+                Log.e("FirestoreError", "Error fetching posts: ${exception.message}")
+            }
+    }
+
+
     private fun getCoordinatesFromSharedPreferences(): Pair<Double, Double> {
         // Retrieve the saved JSON string from SharedPreferences
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("ForecastPrefs", Context.MODE_PRIVATE)
         val forecastJson = sharedPreferences.getString("saved_forecast", null)
-            ?: return Pair(defaultLatitude, defaultLongitude)
 
-        // If the JSON is null (i.e., no saved forecast), return default coordinates
+        if (forecastJson == null) {
+            // If the JSON is null (i.e., no saved forecast), fetch the current location
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        // Deserialize the JSON string into a Forecast object
-        val forecast = Utils.deserializeForecast(forecastJson)
+            fetchCurrentLocation { latitude, longitude ->
+                // Use the fetched coordinates to make an API call
+                ApiCall().getForecast(requireContext(), { forecast ->
+                    handleForecastData(forecast)
+                }, latitude, longitude)
+            }
 
-        // Extract latitude and longitude from the Forecast object (assuming the Forecast has location data)
-        val latitude = forecast.location.latitude ?: defaultLatitude
-        val longitude = forecast.location.longitude ?: defaultLongitude
+            // Return default coordinates while the location fetch is asynchronous
+            return Pair(defaultLatitude, defaultLongitude)
+        } else {
+            // Deserialize the JSON string into a Forecast object
+            val forecast = Utils.deserializeForecast(forecastJson)
 
-        return Pair(latitude, longitude)
+            // Extract latitude and longitude from the Forecast object
+            val latitude = forecast.location.latitude ?: defaultLatitude
+            val longitude = forecast.location.longitude ?: defaultLongitude
+
+            return Pair(latitude, longitude)
+        }
     }
 
 
@@ -135,6 +199,45 @@ class HomeFragment : Fragment() {
             }
         }, latitude, longitude)  // Pass the coordinates to the API call
     }
+
+    @SuppressLint("MissingPermission")
+    private fun fetchCurrentLocation(onLocationFetched: (Double, Double) -> Unit) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Request permissions if not granted
+            requestPermissions(
+                arrayOf(
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
+                ), 1001
+            )
+            return
+        }
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            if (location != null) {
+                onLocationFetched(location.latitude, location.longitude)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Unable to fetch current location. Using default coordinates.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                onLocationFetched(defaultLatitude, defaultLongitude)
+            }
+        }.addOnFailureListener {
+            Log.e("LocationError", "Failed to fetch location: ${it.message}")
+            onLocationFetched(defaultLatitude, defaultLongitude)
+        }
+    }
+
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {

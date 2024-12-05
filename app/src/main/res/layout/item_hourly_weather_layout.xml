@@ -10,10 +10,10 @@
         android:id="@+id/hourly_weather_tv_hour"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:fontFamily="@font/roboto_bold"
         android:gravity="center"
         android:textColor="#000000"
-        android:textSize="18sp"
-        android:fontFamily="@font/roboto_bold"/>
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/hourly_weather_iv_icon"
@@ -26,9 +26,9 @@
         android:id="@+id/hourly_weather_tv_temp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
         android:gravity="center"
         android:textColor="#000000"
-        android:textSize="24sp"
-        android:fontFamily="@font/roboto_bold"/>
+        android:textSize="20sp" />
 
 </LinearLayout>
