@@ -50,7 +50,6 @@
             android:hint="Search for a city"
             android:inputType="text"
             android:singleLine="false"
-            android:textColorHint="@color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/fragment_search_gl_left"
             app:layout_constraintTop_toBottomOf="@+id/fragment_search_tv_search" />
