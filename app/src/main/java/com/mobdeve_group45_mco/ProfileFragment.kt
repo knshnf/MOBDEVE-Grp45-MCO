@@ -1,6 +1,7 @@
 package com.mobdeve_group45_mco
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -56,40 +57,64 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val currentUser = auth.currentUser
+
+        // Update UI elements based on user authentication state
+        if (currentUser == null) {
+            // User is not logged in, hide edit profile button
+            viewBinding.fragmentProfileBtnEditProfile.visibility = View.GONE
+
+            // Update logout button to "Sign In" with green color
+            val logoutBtn = view.findViewById<Button>(R.id.fragment_profile_btn_Logout)
+            logoutBtn.text = "Sign In"
+            logoutBtn.setBackgroundColor(Color.parseColor("#32C777"))
+
+            logoutBtn.setOnClickListener {
+                // Navigate to login page
+                val navIntent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(navIntent)
+            }
+
+        } else {
+            // User is logged in, show edit profile button
+            viewBinding.fragmentProfileBtnEditProfile.visibility = View.VISIBLE
+
+            // Set up logout button
+            val logoutBtn = view.findViewById<Button>(R.id.fragment_profile_btn_Logout)
+//            logoutBtn.text = "Logout"
+//            logoutBtn.setBackgroundColor(Color.parseColor("#FF0000")) // Default logout color
+
+            logoutBtn.setOnClickListener {
+                AuthUI.getInstance()
+                    .signOut(requireContext())
+                    .addOnCompleteListener {
+                        // Navigate to the login page and finish the current MainActivity
+                        val navIntent = Intent(requireContext(), LoginActivity::class.java)
+                        navIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(navIntent)
+                    }
+            }
+
+            viewBinding.fragmentProfileBtnEditProfile.setOnClickListener {
+                val intent = Intent(requireContext(), EditProfile::class.java)
+                intent.putExtra("bio", viewBinding.fragmentProfileTvBio.text.toString())
+                startActivity(intent)
+            }
+        }
+
         loadUserProfile()
-
-        viewBinding.fragmentProfileTvName.text = auth.currentUser?.displayName
-        viewBinding.fragmentProfileTvUsername.text = auth.currentUser?.email
-
-        val logoutBtn = view.findViewById<Button>(R.id.fragment_profile_btn_Logout)
-        logoutBtn.setOnClickListener {
-            AuthUI.getInstance()
-                .signOut(requireContext())
-                .addOnCompleteListener {
-                    // Navigate to the login page and finish the current MainActivity
-                    val navIntent = Intent(requireContext(), LoginActivity::class.java)
-                    navIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(navIntent)
-                }
-        }
-
-        viewBinding.fragmentProfileBtnEditProfile.setOnClickListener {
-            val intent = Intent(requireContext(), EditProfile::class.java)
-            intent.putExtra("bio", viewBinding.fragmentProfileTvBio.text.toString())
-            startActivity(intent)
-        }
-
     }
 
     private fun loadImageFromFirebaseStorage(imagePath: String) {
-        val storageRef = storage.reference.child("profile_pictures/Bt1Y7gZNfrcns7l2MyXEPu3VGlu2.jpg")
+        val storageRef = storage.reference.child(imagePath)
 
-        Log.i("Hello", "Downloading file")
+        // Get the download URL and load it using Glide
         storageRef.downloadUrl.addOnSuccessListener { uri ->
             // Using Glide to load the image into ImageView
+
             Glide.with(this)
-                .load(uri)
-                .into(viewBinding.fragmentProfileImgProfile)
+                .load(uri) // URI of the image
+                .into(viewBinding.fragmentProfileImgProfile) // ImageView to set the image in
         }.addOnFailureListener { e ->
 //            Toast.makeText(this, "Failed to load image: ${e.message}", Toast.LENGTH_SHORT).show()
         }
@@ -112,7 +137,7 @@ class ProfileFragment : Fragment() {
                     viewBinding.fragmentProfileTvName.text = name
                     viewBinding.fragmentProfileTvBio.text = bio
                     profilePicUrl?.let {
-                            loadImageFromFirebaseStorage(profilePicUrl)
+                            loadImageFromFirebaseStorage(it)
                         }
                 } else {
                     // If document doesn't exist, create it with default values
