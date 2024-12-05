@@ -106,7 +106,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun loadImageFromFirebaseStorage(imagePath: String) {
-        Log.i("hi", imagePath)
         val storageRef = storage.reference.child(imagePath)
 
         // Get the download URL and load it using Glide

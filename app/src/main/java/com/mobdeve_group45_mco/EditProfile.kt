@@ -143,14 +143,19 @@ class EditProfile : AppCompatActivity() {
     }
 
     private fun saveProfileToFirestore(currentUser: FirebaseUser, newName: String, newBio: String, profilePicUrl: String?) {
-        val userProfile = UserProfile(
-            name = newName,
-            bio = newBio,
-            profile_pic = profilePicUrl ?: ""
+        // Create a map for the fields to update
+        val userProfileUpdates = mutableMapOf<String, Any>(
+            "name" to newName,
+            "bio" to newBio
         )
 
+        // Add profile_pic field only if the URL is not null
+        profilePicUrl?.let {
+            userProfileUpdates["profile_pic"] = it
+        }
+
         db.collection("users").document(currentUser.uid)
-            .set(userProfile)
+            .update(userProfileUpdates)
             .addOnSuccessListener {
                 updateAuthProfile(currentUser, newName)
             }
@@ -158,6 +163,7 @@ class EditProfile : AppCompatActivity() {
                 Toast.makeText(this, "Error saving profile: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     private fun updateAuthProfile(currentUser: FirebaseUser, newName: String) {
         val profileUpdates = UserProfileChangeRequest.Builder()
